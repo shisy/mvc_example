@@ -7,7 +7,7 @@ import tornado.web
 
 from tornado.options import define, options
 
-import orm                                        # 引入刚刚编写的orm层代码
+from app.models import orm
 
 define( 'port', default = 9999, help = 'run on the given port', type = int )
 
@@ -23,7 +23,7 @@ class MainHandler( tornado.web.RequestHandler ):           # 主Handler，用来
 
                 users = user_orm.GetAllUser()              # 使用ORM获取所有用户的信息
                 # 下面这一行会将title和users两个变量分别发送到指定模板的对应变量中去
-                self.render( 'templates/UserManager.html', title = title, users = users )      # 并显示该模板页面
+                self.render( '../views/UserManager.html', title = title, users = users )      # 并显示该模板页面
 
         def post( self ):
                 pass                                       # 这里不处理POST请求
@@ -55,7 +55,7 @@ class EditUserHandler( tornado.web.RequestHandler ):       # 响应/EditUser的U
         '''
         def get( self ):                                   # /EditUser的URL中，响应GET请求
                 user_info = user_orm.GetUserByName( self.get_argument( 'user_name' ) )    # 利用ORM获取指定用户的信息
-                self.render( 'templates/EditUserInfo.html', user_info = user_info )       # 将该用户信息发送到EditUserInfo.html以供修改
+                self.render( '../views/EditUserInfo.html', user_info = user_info )       # 将该用户信息发送到EditUserInfo.html以供修改
 
         def post( self ):
                 pass
